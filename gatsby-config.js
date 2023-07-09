@@ -9,20 +9,28 @@
  */
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
-    siteUrl: `https://gatsbystarterdefaultsource.gatsbyjs.io/`,
+    title: `nickwoods.us`,
+    description: `Nick Woods is a digital product design leader, motion artist, and strategist`,
+    author: `@sigdesign`,
+    siteUrl: `https://nickwoods.us/`,
   },
   plugins: [
     `gatsby-plugin-image`,
     {
+      resolve: 'gatsby-source-contentful',
+      options: {
+        spaceId: 'REDACTED_SPACE_ID',
+        accessToken: 'REDACTED'
+      }
+    },
+    {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `images`,
+        name: `src`,
         path: `${__dirname}/src/images`,
       },
     },
+    'gatsby-plugin-react-helmet',
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
