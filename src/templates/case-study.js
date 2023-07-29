@@ -10,6 +10,7 @@ const CaseStudyTemplate = ({ data }) => {
     projectHero,
     projectContent,
     media,
+    video1,
   } = data.contentfulCaseStudy
 
   return (
@@ -23,6 +24,9 @@ const CaseStudyTemplate = ({ data }) => {
       <p>{credits}</p>
       <img src={projectHero.file.url} alt="" />
       <div>{renderRichText(projectContent)}</div>
+      <div class="video-wrapper">
+      <iframe width="560" height="349" src={video1} frameborder="0" allowfullscreen></iframe>
+      </div>
       {media.map((media, index) => (
       <img key={index} src={media.file.url} alt="" />
       ))}
@@ -54,6 +58,7 @@ export const query = graphql`
           url
         }
       }
+      video1
     }
   }
 `
