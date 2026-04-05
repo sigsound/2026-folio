@@ -1,0 +1,141 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+
+// Helper function to convert Vimeo URLs to embed format
+function getVimeoEmbedUrl(url) {
+  if (!url) return null;
+
+  // If it's already a player.vimeo.com URL, use it as-is
+  if (url.includes('player.vimeo.com')) {
+    return url;
+  }
+
+  // Extract video ID from various Vimeo URL formats
+  const vimeoRegex = /(?:vimeo\.com\/(?:.*\/)?(?:video\/)?|v=|vi=)?(\d+)/;
+  const match = url.match(vimeoRegex);
+
+  if (match && match[1]) {
+    return `https://player.vimeo.com/video/${match[1]}?title=0&byline=0&portrait=0`;
+  }
+
+  // If it's just a number, assume it's a video ID
+  if (/^\d+$/.test(url.trim())) {
+    return `https://player.vimeo.com/video/${url.trim()}?title=0&byline=0&portrait=0`;
+  }
+
+  return null;
+}
+
+const video1EmbedUrl = getVimeoEmbedUrl(project.data.video1);
+const video2EmbedUrl = getVimeoEmbedUrl(project.data.video2);
+---
+
+<Base title={`${project.data.title} - Nick Woods`} description={project.data.impact}>
+  <div class="cs-hero-fullwidth">
+    <div class="cs-hero">
+      <div class="cs-hero-overlay">
+        <h1 class="cs-title">{project.data.title}</h1>
+        <div class="cs-metadata">
+          <div class="cs-metadata-column">
+            <h3>Role</h3>
+            <p>{project.data.role}</p>
+          </div>
+          <div class="cs-metadata-column">
+            <h3>Timeline</h3>
+            <p>{project.data.timeline}</p>
+          </div>
+          <div class="cs-metadata-column">
+            <h3>Impact</h3>
+            <p>{project.data.impact}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cs-content">
+    <section class="cs-how-it-started">
+      <div class="cs-started-content">
+        <div class="cs-started-text">
+          <Content />
+        </div>
+        {project.data.hisImage && (
+          <div class="cs-started-image">
+            <img src={project.data.hisImage} alt="How it started" />
+          </div>
+        )}
+      </div>
+    </section>
+
+    {(video1EmbedUrl || video2EmbedUrl) && (
+      <section class="cs-video-section">
+        {video1EmbedUrl && (
+          <div class="video-wrapper">
+            <iframe
+              src={video1EmbedUrl}
+              width="640"
+              height="360"
+              frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen
+              loading="lazy"
+              title="Case Study Video 1"
+            />
+          </div>
+        )}
+        {video2EmbedUrl && (
+          <div class="video-wrapper">
+            <iframe
+              src={video2EmbedUrl}
+              width="640"
+              height="360"
+              frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen
+              loading="lazy"
+              title="Case Study Video 2"
+            />
+          </div>
+        )}
+      </section>
+    )}
+
+    {project.data.media && project.data.media.length > 0 && (
+      <>
+        <section class="cs-model-showcase">
+          <img src={project.data.media[0].src} alt={project.data.media[0].alt} />
+        </section>
+
+        {project.data.media.length > 1 && (
+          <section class="cs-mobile-screenshots">
+            <div class="cs-screenshots-grid">
+              {project.data.media.slice(1, 4).map((screenshot) => (
+                <div class="cs-phone-mockup">
+                  <img src={screenshot.src} alt={screenshot.alt} />
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+      </>
+    )}
+
+    <section class="cs-learnings">
+      <div class="cs-learnings-grid">
+        <!-- Content will be rendered from markdown in the Content component above -->
+      </div>
+    </section>
+  </div>
+</Base>

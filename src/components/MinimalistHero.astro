@@ -1,0 +1,296 @@
+---
+// This component will load THREE.js on the client side only
+---
+
+<div id="hero-canvas-mount" class="hero-canvas-container"></div>
+
+<style>
+  .hero-canvas-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: auto;
+  }
+</style>
+
+<script>
+  // Load THREE.js dynamically and initialize the hero animation
+  async function initHero() {
+    try {
+      // Import THREE.js dynamically
+      const THREE = await import('https://cdn.skypack.dev/three@0.152.2');
+
+      const mountRef = document.getElementById('hero-canvas-mount');
+      if (!mountRef) return;
+
+      let frameRef;
+      let mouseRef = { x: 0, y: 0 };
+
+      // Scene setup
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+
+      const renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: true
+      });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setClearColor(0x000000, 0);
+      mountRef.appendChild(renderer.domElement);
+
+      // Create dynamic line network
+      let nodeCount = 80;
+      const maxConnections = 300;
+      const nodes = [];
+
+      // Generate random nodes with varied behaviors
+      for (let i = 0; i < nodeCount; i++) {
+        const isInteractive = Math.random() < 0.3;
+        nodes.push({
+          x: (Math.random() - 0.5) * 24,
+          y: (Math.random() - 0.5) * 24,
+          z: (Math.random() - 0.5) * 12,
+          vx: (Math.random() - 0.5) * (isInteractive ? 0.003 : 0.008),
+          vy: (Math.random() - 0.5) * (isInteractive ? 0.003 : 0.008),
+          vz: (Math.random() - 0.5) * (isInteractive ? 0.002 : 0.005),
+          isInteractive: isInteractive,
+          baseVx: (Math.random() - 0.5) * 0.006,
+          baseVy: (Math.random() - 0.5) * 0.006,
+          baseVz: (Math.random() - 0.5) * 0.004,
+          isClickNode: false,
+          life: 1.0
+        });
+      }
+
+      // Create line geometry for connections
+      const lineGeometry = new THREE.BufferGeometry();
+      const positions = new Float32Array(maxConnections * 2 * 3);
+      lineGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      lineGeometry.setDrawRange(0, 0);
+
+      // Line material
+      const lineMaterial = new THREE.LineBasicMaterial({
+        color: 0x4B5563,
+        transparent: true,
+        opacity: 0.4,
+        blending: THREE.AdditiveBlending
+      });
+
+      const lineSystem = new THREE.LineSegments(lineGeometry, lineMaterial);
+      scene.add(lineSystem);
+
+      // Function to update connections
+      const updateConnections = () => {
+        const positions = lineGeometry.attributes.position.array;
+        let lineIndex = 0;
+        const maxDistance = 4;
+
+        for (let i = 0; i < nodes.length && lineIndex < maxConnections; i++) {
+          for (let j = i + 1; j < nodes.length && lineIndex < maxConnections; j++) {
+            const nodeA = nodes[i];
+            const nodeB = nodes[j];
+
+            if (nodeA.life <= 0 || nodeB.life <= 0) continue;
+
+            const dx = nodeA.x - nodeB.x;
+            const dy = nodeA.y - nodeB.y;
+            const dz = nodeA.z - nodeB.z;
+            const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+            const connectionRange = (nodeA.isClickNode || nodeB.isClickNode) ? maxDistance * 1.5 : maxDistance;
+
+            if (distance < connectionRange) {
+              const startIndex = lineIndex * 6;
+
+              positions[startIndex] = nodeA.x;
+              positions[startIndex + 1] = nodeA.y;
+              positions[startIndex + 2] = nodeA.z;
+
+              positions[startIndex + 3] = nodeB.x;
+              positions[startIndex + 4] = nodeB.y;
+              positions[startIndex + 5] = nodeB.z;
+
+              lineIndex++;
+            }
+          }
+        }
+
+        lineGeometry.setDrawRange(0, lineIndex * 2);
+        lineGeometry.attributes.position.needsUpdate = true;
+      };
+
+      updateConnections();
+
+      // Set initial theme
+      const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+      const initialColor = isDarkMode ? 0x9CA3AF : 0x4B5563;
+      lineMaterial.color.setHex(initialColor);
+
+      camera.position.z = 5;
+
+      // Mouse interaction handler
+      const handleMouseMove = (event) => {
+        mouseRef.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouseRef.y = -(event.clientY / window.innerHeight) * 2 + 1;
+      };
+
+      window.addEventListener('mousemove', handleMouseMove);
+
+      // Mouse click handler
+      const handleMouseClick = (event) => {
+        const clickX = (event.clientX / window.innerWidth) * 2 - 1;
+        const clickY = -(event.clientY / window.innerHeight) * 2 + 1;
+
+        const newNode = {
+          x: clickX * 8,
+          y: clickY * 8,
+          z: (Math.random() - 0.5) * 2,
+          vx: (Math.random() - 0.5) * 0.004,
+          vy: (Math.random() - 0.5) * 0.004,
+          vz: (Math.random() - 0.5) * 0.003,
+          isInteractive: true,
+          baseVx: (Math.random() - 0.5) * 0.003,
+          baseVy: (Math.random() - 0.5) * 0.003,
+          baseVz: (Math.random() - 0.5) * 0.002,
+          isClickNode: true,
+          life: 1.0,
+          fadeOutTime: Date.now() + 8000
+        };
+
+        nodes.push(newNode);
+      };
+
+      window.addEventListener('click', handleMouseClick);
+
+      // Animation loop
+      const animate = () => {
+        frameRef = requestAnimationFrame(animate);
+
+        const mouseInfluence = {
+          x: mouseRef.x * 8,
+          y: mouseRef.y * 8,
+          z: 0
+        };
+
+        // Update node positions
+        for (let i = nodes.length - 1; i >= 0; i--) {
+          const node = nodes[i];
+
+          if (node.isClickNode && Date.now() > node.fadeOutTime) {
+            node.life -= 0.02;
+            if (node.life <= 0) {
+              nodes.splice(i, 1);
+              continue;
+            }
+          }
+
+          if (node.isInteractive) {
+            const dx = mouseInfluence.x - node.x;
+            const dy = mouseInfluence.y - node.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 6) {
+              const force = (6 - distance) * 0.00005;
+              node.vx += dx * force;
+              node.vy += dy * force;
+            }
+
+            node.vx += (node.baseVx - node.vx) * 0.005;
+            node.vy += (node.baseVy - node.vy) * 0.005;
+            node.vz += (node.baseVz - node.vz) * 0.005;
+
+            node.vx *= 0.992;
+            node.vy *= 0.992;
+            node.vz *= 0.992;
+          } else {
+            node.vx += (node.baseVx - node.vx) * 0.01;
+            node.vy += (node.baseVy - node.vy) * 0.01;
+            node.vz += (node.baseVz - node.vz) * 0.01;
+
+            node.vx *= 0.998;
+            node.vy *= 0.998;
+            node.vz *= 0.998;
+          }
+
+          node.x += node.vx;
+          node.y += node.vy;
+          node.z += node.vz;
+
+          if (node.x > 14 || node.x < -14) node.vx *= -1;
+          if (node.y > 14 || node.y < -14) node.vy *= -1;
+          if (node.z > 8 || node.z < -8) node.vz *= -1;
+        }
+
+        updateConnections();
+        renderer.render(scene, camera);
+      };
+
+      animate();
+
+      // Handle resize
+      const handleResize = () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      };
+
+      window.addEventListener('resize', handleResize);
+
+      // Theme change handler
+      const handleThemeChange = () => {
+        const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+        const color = isDarkMode ? 0x9CA3AF : 0x4B5563;
+        lineMaterial.color.setHex(color);
+      };
+
+      // Listen for theme changes
+      const themeObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+            handleThemeChange();
+          }
+        });
+      });
+
+      themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['data-theme']
+      });
+
+      // Cleanup function for page navigation
+      window.addEventListener('beforeunload', () => {
+        if (frameRef) {
+          cancelAnimationFrame(frameRef);
+        }
+        window.removeEventListener('resize', handleResize);
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('click', handleMouseClick);
+        themeObserver.disconnect();
+        if (mountRef && renderer.domElement) {
+          mountRef.removeChild(renderer.domElement);
+        }
+        renderer.dispose();
+        lineGeometry.dispose();
+        lineMaterial.dispose();
+      });
+
+    } catch (error) {
+      console.warn('Failed to load THREE.js hero animation:', error);
+    }
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHero);
+  } else {
+    initHero();
+  }
+</script>

@@ -1,0 +1,149 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = "nickwoods.us", description = "Nick Woods is a digital product design leader, motion artist, and strategist" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+
+    <!-- Global Styles -->
+    <style is:global>
+      @import '../styles/global.css';
+    </style>
+  </head>
+  <body>
+    <div id="theme-provider">
+      <header class="Header">
+        <div class="HeaderGroup">
+          <a class="Logo" href="/">
+            <img id="logo-img" src="/images/Logo-on-Light.svg" alt="An iconographic representation of Nick Woods" width="48" />
+          </a>
+          <button
+            id="theme-toggle"
+            class="theme-toggle"
+            aria-label="Switch theme"
+          >
+            <div class="toggle-track">
+              <div class="toggle-thumb">
+                <svg id="sun-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="5" fill="currentColor"/>
+                  <line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <svg id="moon-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="currentColor"/>
+                </svg>
+              </div>
+            </div>
+          </button>
+        </div>
+      </header>
+
+      <div class="layout-content">
+        <main>
+          <slot />
+        </main>
+      </div>
+    </div>
+
+    <script>
+      // Theme management - vanilla JS replacement for React ThemeContext
+      class ThemeManager {
+        constructor() {
+          this.theme = 'light';
+          this.init();
+        }
+
+        init() {
+          // Check localStorage first
+          const savedTheme = localStorage.getItem('theme');
+          if (savedTheme) {
+            this.setTheme(savedTheme);
+          } else {
+            // Check system preference
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            this.setTheme(prefersDark ? 'dark' : 'light');
+          }
+
+          // Listen for system theme changes
+          const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+          mediaQuery.addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+              this.setTheme(e.matches ? 'dark' : 'light');
+            }
+          });
+
+          // Setup toggle button
+          const toggleButton = document.getElementById('theme-toggle');
+          if (toggleButton) {
+            toggleButton.addEventListener('click', () => this.toggleTheme());
+          }
+        }
+
+        setTheme(newTheme) {
+          this.theme = newTheme;
+          document.documentElement.setAttribute('data-theme', newTheme);
+
+          // Update logo
+          const logoImg = document.getElementById('logo-img');
+          if (logoImg) {
+            logoImg.src = newTheme === 'dark'
+              ? '/images/Logo-on-Dark.svg'
+              : '/images/Logo-on-Light.svg';
+          }
+
+          // Update toggle icons
+          const sunIcon = document.getElementById('sun-icon');
+          const moonIcon = document.getElementById('moon-icon');
+          if (sunIcon && moonIcon) {
+            if (newTheme === 'dark') {
+              sunIcon.style.display = 'none';
+              moonIcon.style.display = 'block';
+            } else {
+              sunIcon.style.display = 'block';
+              moonIcon.style.display = 'none';
+            }
+          }
+
+          // Update toggle button aria-label
+          const toggleButton = document.getElementById('theme-toggle');
+          if (toggleButton) {
+            toggleButton.setAttribute('aria-label',
+              `Switch to ${newTheme === 'light' ? 'dark' : 'light'} theme`);
+          }
+        }
+
+        toggleTheme() {
+          const newTheme = this.theme === 'light' ? 'dark' : 'light';
+          this.setTheme(newTheme);
+          localStorage.setItem('theme', newTheme);
+        }
+      }
+
+      // Initialize theme manager
+      new ThemeManager();
+    </script>
+  </body>
+</html>

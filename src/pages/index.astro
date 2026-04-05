@@ -1,0 +1,53 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import MinimalistHero from '../components/MinimalistHero.astro';
+
+// Get projects and sort by order (if available) or by title
+const projects = await getCollection('projects');
+const sortedProjects = projects.sort((a, b) => {
+  // Sort by title since we don't have order field in frontmatter yet
+  return (a.data.title || '').localeCompare(b.data.title || '');
+});
+
+// Get about content
+const aboutCollection = await getCollection('about');
+const about = aboutCollection[0]; // Should be one about entry
+---
+
+<Base title="nickwoods.us - Digital Product Design Leader">
+  <MinimalistHero />
+
+  <div class="Hero">
+    <div class="HeroGroup">
+      <h1>Leading teams that design products people love</h1>
+    </div>
+  </div>
+
+  <div class="Cards col">
+    {sortedProjects.map((project) => (
+      <ProjectCard
+        title={project.data.title}
+        image={project.data.thumbnail}
+        contentfulId={project.id}
+      />
+    ))}
+  </div>
+
+  {about && (
+    <div class="cs-content">
+      <div class="about">
+        <img
+          src={about.data.profileImage}
+          alt="Profile image"
+        />
+        <div class="about-text">
+          <div set:html={about.body} />
+        </div>
+      </div>
+    </div>
+  )}
+
+  <div class="skills"></div>
+</Base>
