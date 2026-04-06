@@ -11,10 +11,8 @@ video2: ""
 media: [{"src":"/images/projects/D2KWSXTIfB8rH3jUhDDr9/media-1.jpeg","alt":"Boolean cubes used in Blender to crop a Matterport model. Created for a hackathon concept."},{"src":"/images/projects/D2KWSXTIfB8rH3jUhDDr9/media-2.jpeg","alt":"Media 2"},{"src":"/images/projects/D2KWSXTIfB8rH3jUhDDr9/media-3.jpeg","alt":"Media 3"}]
 ---
 
-## How it started
 
 ## How it started
-
 
 
 Matterport had three siloed product teams (Mobile, Cloud, WebGL) with inconsistent user experiences and limited design resources (3 designers total, including me).
@@ -22,7 +20,6 @@ Matterport had three siloed product teams (Mobile, Cloud, WebGL) with inconsiste
 
 As the company prepared for IPO, we needed unified product vision, scalable design processes, and cross-platform consistency across a complex 3D ecosystem serving real estate, construction, and enterprise markets. The challenge was transforming fragmented teams into a cohesive organization while maintaining product momentum.
 
-## Learnings
 
 ## Learning & Evolution
 

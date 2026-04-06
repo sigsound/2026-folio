@@ -13,16 +13,12 @@ media: [{"src":"/images/projects/7CDsUEgfNnXe0d6Mx0nE7W/media-1.png","alt":"Medi
 
 ## How it started
 
-## How it started
-
-
 
 Polycam was already a loved 3D scanning app, yet with limited functionality and poor user retention. Users could scan objects but lacked essential tools for practical application - editing and measurement capabilities lacked detail and were difficult to use.
 
 
 The app needed a complete transformation to compete with established players like Matterport while serving a broader market from professionals to hobbyists. The core challenge was reimagining the entire user experience while maintaining the simplicity that made Polycam great.
 
-## Learnings
 
 ## Learnings & Evolution
 

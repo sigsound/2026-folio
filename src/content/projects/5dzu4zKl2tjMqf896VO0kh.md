@@ -11,10 +11,8 @@ video2: ""
 media: [{"src":"/images/projects/5dzu4zKl2tjMqf896VO0kh/media-1.jpeg","alt":"Boolean cubes used in Blender to crop a Matterport model. Created for a hackathon concept."}]
 ---
 
-## How it started
 
 ## How it started
-
 
 
 As Polycam scaled beyond initial product success, we needed formal product management processes, team structure, and growth strategy to transition from startup to sustainable growth company.
@@ -22,7 +20,6 @@ As Polycam scaled beyond initial product success, we needed formal product manag
 
 The company lacked career development frameworks, systematic experimentation processes, and clear product strategy. The challenge was building organizational maturity while maintaining the innovation pace and scrappy culture that made us successful.
 
-## Learnings
 
 ## Learning & Evolution
 

@@ -76,9 +76,13 @@
       lineGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
       lineGeometry.setDrawRange(0, 0);
 
+      // Theme colors
+      const LIGHT_COLOR = 0x000000;
+      const DARK_COLOR = 0x9CA3AF;
+
       // Line material
       const lineMaterial = new THREE.LineBasicMaterial({
-        color: 0x4B5563,
+        color: LIGHT_COLOR,
         transparent: true,
         opacity: 0.4,
         blending: THREE.AdditiveBlending
@@ -131,8 +135,7 @@
 
       // Set initial theme
       const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
-      const initialColor = isDarkMode ? 0x9CA3AF : 0x4B5563;
-      lineMaterial.color.setHex(initialColor);
+      lineMaterial.color.setHex(isDarkMode ? DARK_COLOR : LIGHT_COLOR);
 
       camera.position.z = 5;
 
@@ -247,8 +250,7 @@
       // Theme change handler
       const handleThemeChange = () => {
         const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
-        const color = isDarkMode ? 0x9CA3AF : 0x4B5563;
-        lineMaterial.color.setHex(color);
+        lineMaterial.color.setHex(isDarkMode ? DARK_COLOR : LIGHT_COLOR);
       };
 
       // Listen for theme changes

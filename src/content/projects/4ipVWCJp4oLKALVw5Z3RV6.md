@@ -13,9 +13,6 @@ media: [{"src":"/images/projects/4ipVWCJp4oLKALVw5Z3RV6/media-1.jpeg","alt":"Med
 
 ## How it started
 
-## How it started
-
-
 
 Intuit's products (Quickbooks, Turbotax, and Mint) used surprisingly little data visualization. I led a 2-year research initiative to shape the future of financial data visualization, coached by founder Scott Cook.
 
@@ -25,7 +22,6 @@ The Innovation & Advanced Technology group had a mission: inspire and influence 
 
 Much of my focus ended up on Artificial Intelligence as a method of data delivery, since the IAT group was filled with brilliant machine learning engineers and product owners.
 
-## Learnings
 
 ## Learning & Evolution
 

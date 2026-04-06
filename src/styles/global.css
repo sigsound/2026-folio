@@ -103,7 +103,6 @@ h5 {
 .layout-content {
   margin: 0 auto;
   max-width: var(--size-content);
-  padding: var(--size-gutter);
 }
 
 /* Header styles */
@@ -221,8 +220,6 @@ h5 {
 /* Cards section */
 .Cards {
   max-width: 1440px;
-  margin: 0 auto;
-  padding: 80px 24px;
   background: transparent;
 }
 
@@ -314,7 +311,7 @@ h5 {
 
 .cs-content {
   max-width: 1440px;
-  padding: 80px 24px;
+  padding: 128px 0px;
   margin: 0 auto;
   position: relative;
   z-index: 1;
