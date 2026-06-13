@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import MinimalistHero from '../components/MinimalistHero.astro';
@@ -14,14 +14,16 @@ const sortedProjects = projects.sort((a, b) => {
 // Get about content
 const aboutCollection = await getCollection('about');
 const about = aboutCollection[0]; // Should be one about entry
+const { Content: AboutContent } = about ? await render(about) : { Content: null };
 ---
 
-<Base title="nickwoods.us - Digital Product Design Leader">
+<Base title="nickwoods.us - Product Design Leader">
   <MinimalistHero />
 
   <div class="Hero">
     <div class="HeroGroup">
-      <h1>Leading teams that design products people love</h1>
+      <h1>Designing the forest
+        <br>and the trees</h1>
     </div>
   </div>
 
@@ -30,7 +32,7 @@ const about = aboutCollection[0]; // Should be one about entry
       <ProjectCard
         title={project.data.title}
         image={project.data.thumbnail}
-        contentfulId={project.id}
+        contentfulId={project.slug}
       />
     ))}
   </div>
@@ -38,16 +40,95 @@ const about = aboutCollection[0]; // Should be one about entry
   {about && (
     <div class="cs-content">
       <div class="about">
-        <img
-          src={about.data.profileImage}
-          alt="Profile image"
-        />
+        <div class="about-img" style={`background-image: url(${about.data.profileImage})`}></div>
         <div class="about-text">
-          <div set:html={about.body} />
+          {AboutContent && <AboutContent />}
         </div>
       </div>
     </div>
   )}
 
-  <div class="skills"></div>
+  <div class="skills-footer">
+    <div>
+      <h3>Core Skills</h3>
+      <div class="thin-line"></div>
+      <h5>AI Prototyping</h5>
+      <h5>Product Management</h5>
+      <h5>Product Design</h5>
+      <h5>Interaction Design</h5>
+      <h5>Branding</h5>
+      <h5>Art Direction</h5>
+      <h5>Public Speaking</h5>
+      <h5>3D Modeling</h5>
+      <h5>3D Animation</h5>
+      <h5>Motion Design</h5>
+      <h5>Video Editing</h5>
+      <h5>Web &amp; Mobile Prototyping</h5>
+      <h5>User Interface Design</h5>
+      <h5>User Experience Design</h5>
+      <h5>Photography</h5>
+      <h5>Front-End Development</h5>
+    </div>
+    <div>
+      <h3>Brands I've Worked On</h3>
+      <div class="thin-line"></div>
+      <div class="brands-grid">
+        <div>
+          <h5>Adidas</h5>
+          <h5>Nike+</h5>
+          <h5>Intel</h5>
+          <h5>Widmer Brothers</h5>
+          <h5>Lucasarts</h5>
+          <h5>Incase</h5>
+          <h5>Barkman Honey</h5>
+          <h5>LG</h5>
+          <h5>Bowflex</h5>
+          <h5>Sound United</h5>
+          <h5>Intuit</h5>
+          <h5>Matterport</h5>
+        </div>
+        <div>
+          <h5>Monster Headphones</h5>
+          <h5>Samsung</h5>
+          <h5>Microsoft</h5>
+          <h5>Xbox</h5>
+          <h5>Harmonix</h5>
+          <h5>Skullcandy</h5>
+          <h5>Best Buy</h5>
+          <h5>Qualcomm</h5>
+          <h5>Digital Trends</h5>
+          <h5>Omission Beer</h5>
+          <h5>Polycam</h5>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3>Agencies I've Worked With</h3>
+      <div class="thin-line"></div>
+      <h5><a href="http://roundhouseagency.com">Roundhouse</a></h5>
+      <h5><a href="http://cincodesign.com">Cinco</a></h5>
+      <h5><a href="http://industrypdx.com">Industry</a></h5>
+      <h5><a href="http://akqa.com">AKQA</a></h5>
+      <h5><a href="http://instrument.com">Instrument</a></h5>
+      <h5><a href="http://fcb.com">FCB</a></h5>
+      <h5><a href="http://papertiger.com">Paper Tiger</a></h5>
+      <h5><a href="http://zibadesign.com">Ziba</a></h5>
+      <h5><a href="http://www.theprogrampdx.com/">The Program</a></h5>
+      <h5><a href="http://caffelli.com">Caffelli</a></h5>
+      <h5><a href="http://liquidagency.com">Liquid</a></h5>
+      <h5><a href="http://agentthinking.com">Agent</a></h5>
+    </div>
+    <div>
+      <h3>Products I've Worked On</h3>
+      <div class="thin-line"></div>
+      <h5><a href="https://en.wikipedia.org/wiki/InstantAction">Instant Action</a> — First embeddable 3D game</h5>
+      <h5><a href="https://digitaltrends.com">Digital Trends</a> — Editorial &amp; AD Platform</h5>
+      <h5><a href="https://quickbooks.intuit.com">Quickbooks</a></h5>
+      <h5>Mint</h5>
+      <h5><a href="https://turbotax.intuit.com">Turbotax</a></h5>
+      <h5><a href="https://www.nike.com/ntc-app/">Nike Training App</a> (iOS / Android)</h5>
+      <h5><a href="https://matterport.com">Matterport</a> (iOS / Android / Web)</h5>
+      <h5><a href="https://poly.cam">Polycam</a> (iOS / Android / Web)</h5>
+    </div>
+  </div>
 </Base>

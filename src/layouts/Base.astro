@@ -2,9 +2,14 @@
 export interface Props {
   title?: string;
   description?: string;
+  heroHeader?: boolean;
 }
 
-const { title = "nickwoods.us", description = "Nick Woods is a digital product design leader, motion artist, and strategist" } = Astro.props;
+const {
+  title = "nickwoods.us",
+  description = "Nick Woods is a digital product design leader, motion artist, and strategist",
+  heroHeader = false
+} = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -33,7 +38,7 @@ const { title = "nickwoods.us", description = "Nick Woods is a digital product d
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400..900&family=Lato:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Global Styles -->
     <style is:global>
@@ -45,7 +50,7 @@ const { title = "nickwoods.us", description = "Nick Woods is a digital product d
       <header class="Header">
         <div class="HeaderGroup">
           <a class="Logo" href="/">
-            <img id="logo-img" src="/images/Logo-on-Light.svg" alt="An iconographic representation of Nick Woods" width="48" />
+            <img id="logo-img" src={heroHeader ? '/images/Logo-on-Dark.svg' : '/images/Logo-on-Light.svg'} alt="An iconographic representation of Nick Woods" width="48" />
           </a>
         </div>
       </header>
@@ -57,20 +62,25 @@ const { title = "nickwoods.us", description = "Nick Woods is a digital product d
       </div>
     </div>
 
-    <script>
-      // Set correct logo on load
-      const theme = document.documentElement.getAttribute('data-theme');
-      const logoImg = document.getElementById('logo-img');
-      if (logoImg) {
-        logoImg.src = theme === 'dark' ? '/images/Logo-on-Dark.svg' : '/images/Logo-on-Light.svg';
+    <script define:vars={{ heroHeader }}>
+      // Set correct initial logo on non-hero pages (hero pages always use white logo, set server-side)
+      if (!heroHeader) {
+        const theme = document.documentElement.getAttribute('data-theme');
+        const logoImg = document.getElementById('logo-img');
+        if (logoImg) {
+          logoImg.src = theme === 'dark' ? '/images/Logo-on-Dark.svg' : '/images/Logo-on-Light.svg';
+        }
       }
 
-      // Stay in sync if OS preference changes at runtime (e.g. macOS auto mode at sunset)
+      // Always listen for OS theme changes so the page theme stays in sync on ALL pages
       window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
         const newTheme = e.matches ? 'dark' : 'light';
         document.documentElement.setAttribute('data-theme', newTheme);
-        const logo = document.getElementById('logo-img');
-        if (logo) logo.src = newTheme === 'dark' ? '/images/Logo-on-Dark.svg' : '/images/Logo-on-Light.svg';
+        // Only swap the logo on non-hero pages (hero pages always keep white logo)
+        if (!heroHeader) {
+          const logo = document.getElementById('logo-img');
+          if (logo) logo.src = newTheme === 'dark' ? '/images/Logo-on-Dark.svg' : '/images/Logo-on-Light.svg';
+        }
       });
     </script>
   </body>

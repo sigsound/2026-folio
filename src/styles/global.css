@@ -35,7 +35,7 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Lato', sans-serif;
   color: var(--text-primary);
   font-size: 20px;
   line-height: 1.7;
@@ -44,15 +44,16 @@ body {
 }
 
 a {
-  padding-bottom: 4px;
-  border-bottom: 1px solid var(--accent-primary);
+  padding-bottom: 2px;
+  border-bottom: 1px solid #00ffd6;
   color: var(--text-primary);
   text-decoration: none;
-  transition: border-color 0.3s ease, color 0.3s ease;
+  transition: border-color 0.2s ease, opacity 0.2s ease;
 }
 
 a:hover {
-  border-bottom-color: var(--accent-secondary);
+  border-bottom-color: #00ffd6;
+  opacity: 0.7;
 }
 
 p {
@@ -63,6 +64,7 @@ h1 {
   font-family: 'Bodoni Moda', serif;
   font-size: 48px;
   font-weight: 400;
+  font-optical-sizing: auto;
   color: var(--text-primary);
   transition: color 0.3s ease;
 }
@@ -71,6 +73,7 @@ h2 {
   font-family: 'Bodoni Moda', serif;
   font-size: 36px;
   font-weight: 400;
+  font-optical-sizing: auto;
   color: var(--text-primary);
   transition: color 0.3s ease;
 }
@@ -79,6 +82,7 @@ h3 {
   font-family: 'Bodoni Moda', serif;
   font-size: 30px;
   font-weight: 400;
+  font-optical-sizing: auto;
   color: var(--text-primary);
   transition: color 0.3s ease;
 }
@@ -87,6 +91,7 @@ h4 {
   font-family: 'Bodoni Moda', serif;
   font-size: 18px;
   font-weight: 400;
+  font-optical-sizing: auto;
   color: var(--text-primary);
   transition: color 0.3s ease;
 }
@@ -95,6 +100,7 @@ h5 {
   font-family: 'Bodoni Moda', serif;
   font-size: 16px;
   font-weight: 400;
+  font-optical-sizing: auto;
   color: var(--text-primary);
   transition: color 0.3s ease;
 }
@@ -103,6 +109,7 @@ h5 {
 .layout-content {
   margin: 0 auto;
   max-width: var(--size-content);
+  padding: 0 40px;
 }
 
 /* Header styles */
@@ -209,7 +216,7 @@ h5 {
 
 .Hero h1 {
   font-family: 'Bodoni Moda', serif;
-  font-size: 64px;
+  font-size: 80px;
   font-weight: 400;
   color: var(--text-primary);
   text-align: center;
@@ -227,6 +234,7 @@ h5 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 24px;
+  margin-bottom: 96px;
   align-items: start;
 }
 
@@ -234,126 +242,231 @@ h5 {
 .about {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 96px;
-  align-items: center;
-  justify-items: left;
+  grid-gap: 48px;
+  align-items: start;
 }
 
-.about img {
+.about-img {
+  background-color: #00ffd6;
+  background-position: 50% 20%;
+  background-size: cover;
+  height: 750px;
   width: 100%;
-  border-radius: 16px;
 }
 
 .about-text {
   width: 100%;
+  padding: 40px 0;
 }
 
-/* Case study styles */
-.cs-hero-fullwidth {
+.about-text h2 {
+  margin-top: 0;
+  margin-bottom: 24px;
+}
+
+.about-text p,
+.about-text strong,
+.about-text em,
+.about-text a {
+  font-family: 'Lato', sans-serif;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+/* Skills / Brands / Agencies footer */
+.skills-footer {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 96px 0 128px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 40px;
+}
+
+.skills-footer h3 {
+  font-family: 'Lato', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin: 0 0 0;
+}
+
+.thin-line {
+  background-color: var(--border-color);
+  width: 100%;
+  height: 1px;
+  margin: 16px 0 20px;
+}
+
+.skills-footer h5 {
+  font-family: 'Lato', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-primary);
+  margin: 4px 0;
+  line-height: 1.6;
+}
+
+.skills-footer a {
+  font-size: 13px;
+}
+
+.brands-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+/* Case study — single column layout */
+.cs-hero-img {
+  /* True viewport-wide full-bleed */
   width: 100vw;
-  margin-left: calc(-50vw + 50%);
-  margin-right: calc(-50vw + 50%);
-}
-
-.cs-hero {
-  height: 400px;
-  background: var(--bg-secondary);
   position: relative;
+  left: 50%;
+  margin-left: -50vw;
+  max-width: none;
+  height: 560px;
+  background-size: cover;
+  background-position: center;
+  background-color: #191A1B; /* Always dark — keep bg-image support for future CMS use */
+  /* Center overlay content */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+/* Semi-transparent scrim for text legibility over any background image */
+.cs-hero-img::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(40, 40, 36, 0.80);
+  z-index: 0;
+}
+
 .cs-hero-overlay {
-  text-align: center;
   position: relative;
-  z-index: 2;
+  z-index: 1;
+  text-align: center;
+  padding: 0;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.cs-hero-overlay .cs-title {
+  color: #ffffff;
+}
+
+.cs-hero-overlay .cs-metadata {
+  border-bottom: none;
+  margin: 0 auto;
+  max-width: 1000px;
+  width: 100%;
+  padding: 0 72px;
+  gap: 24px;
+}
+
+.cs-hero-overlay .cs-metadata-column {
+  flex: 1;
+  min-width: 0; /* allows text to wrap within the equal-width column */
+}
+
+.cs-hero-overlay .cs-metadata-column h3 {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.cs-hero-overlay .cs-metadata-column p {
+  color: #ffffff;
+}
+
+.cs-single-col {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 80px 24px 128px;
 }
 
 .cs-title {
   font-family: 'Bodoni Moda', serif;
-  font-size: 48px;
+  font-size: 72px;
   font-weight: 400;
   color: var(--text-primary);
-  margin-bottom: 40px;
-  text-align: center;
+  line-height: 1.2;
 }
 
 .cs-metadata {
   display: flex;
-  justify-content: center;
-  gap: 80px;
-  margin-top: 40px;
-}
-
-.cs-metadata-column {
-  text-align: center;
-  width: 200px;
+  gap: 48px;
+  margin-bottom: 64px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--border-color);
+  flex-wrap: wrap;
 }
 
 .cs-metadata-column h3 {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 12px;
+  font-family: 'Lato', sans-serif;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 1px;
-  margin-bottom: 8px;
+  margin: 0 0 6px;
   color: var(--text-secondary);
 }
 
 .cs-metadata-column p {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 14px;
+  font-family: 'Lato', sans-serif;
+  font-size: 13px;
   margin: 0;
   color: var(--text-primary);
-  word-wrap: break-word;
-  overflow-wrap: break-word;
 }
 
-.cs-content {
-  max-width: 1440px;
-  padding: 128px 0px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 1;
-}
-
-.cs-how-it-started {
-  margin-bottom: 96px;
-}
-
-.cs-how-it-started h2 {
-  font-family: 'Bodoni Moda', serif;
-  font-size: 36px;
-  color: var(--text-primary);
-  margin-bottom: 40px;
-}
-
-.cs-started-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 80px;
-  align-items: start;
-}
-
-.cs-started-text {
-  font-family: 'IBM Plex Mono', monospace;
-  line-height: 1.6;
+.cs-body {
+  font-size: 18px;
+  line-height: 1.8;
+  padding-left: 228px;
+  padding-right: 228px;
+  margin-bottom: 90px;
   color: var(--text-primary);
 }
 
-.cs-started-image img {
+.cs-body h2, .cs-body h3 {
+  margin-top: 48px;
+  margin-bottom: 16px;
+}
+
+.cs-body p {
+  margin-bottom: 1.2em;
+}
+
+.cs-featured-img {
+  display: block;
   width: 100%;
   height: auto;
+  margin: 24px 0 0 0;
 }
 
-.cs-content img {
+.cs-media-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 24px 0 0 0;
+}
+
+.cs-media-grid img {
   width: 100%;
+  height: auto;
+  display: block;
+}
+
+.cs-videos {
+  margin: 24px 0;
 }
 
 .video-wrapper {
   position: relative;
   padding-bottom: 56.25%;
   height: 0;
+  margin-bottom: 24px;
 }
 
 .video-wrapper iframe {
@@ -362,104 +475,61 @@ h5 {
   left: 0;
   width: 100%;
   height: 100%;
-}
-
-.cs-video-section {
-  margin-bottom: 96px;
-}
-
-.cs-video-section .video-wrapper {
-  margin-bottom: 96px;
-}
-
-.cs-video-section .video-wrapper:last-child {
-  margin-bottom: 0;
-}
-
-.cs-model-showcase,
-.cs-mobile-screenshots,
-.cs-additional-media {
-  margin-bottom: 96px;
-}
-
-.cs-learnings {
-  margin-bottom: 96px;
-}
-
-.cs-learnings-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-gap: 40px;
-}
-
-.cs-learning-item h3 {
-  font-family: 'Bodoni Moda', serif;
-  font-size: 24px;
-  color: var(--text-primary);
-  margin-bottom: 16px;
-}
-
-.cs-learning-item p {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 16px;
-  line-height: 1.6;
-  color: var(--text-secondary);
-}
-
-.cs-screenshots-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  grid-gap: 24px;
-}
-
-.cs-phone-mockup img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
+  border: none;
 }
 
 /* Responsive styles */
+@media (max-width: 900px) {
+  .skills-footer {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 @media (max-width: 640px) {
-  .Hero h1 {
-    font-size: 48px;
+  /* Reduce page gutters on small screens */
+  .layout-content {
+    padding: 0 20px;
   }
 
-  .cs-hero h1 {
-    font-size: 28px;
+  .cs-hero-img {
+    height: 380px;
+  }
+
+  .cs-hero-overlay {
+    padding: 0 20px;
   }
 
   .cs-title {
-    font-size: 36px;
+    font-size: 28px;
   }
 
   .col {
-    grid-template-columns: repeat(1, auto);
+    grid-template-columns: 1fr;
   }
 
   .about {
-    grid-template-columns: repeat(1, auto);
-    grid-gap: 48px;
+    grid-template-columns: 1fr;
+    grid-gap: 0;
   }
 
-  .cs-started-content {
-    grid-template-columns: 1fr;
-    grid-gap: 40px;
+  .about-img {
+    height: 360px;
+  }
+
+  .about-text {
+    padding: 32px 0 0;
+  }
+
+  .cs-single-col {
+    padding: 48px 0 80px;
   }
 
   .cs-metadata {
-    flex-direction: column;
-    gap: 24px;
+    gap: 20px;
   }
 
-  .cs-metadata-column {
-    width: 100%;
-  }
-
-  .cs-learnings-grid {
+  .skills-footer {
     grid-template-columns: 1fr;
-  }
-
-  .cs-screenshots-grid {
-    grid-template-columns: 1fr;
+    padding: 48px 0;
   }
 }

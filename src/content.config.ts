@@ -9,9 +9,8 @@ const projects = defineCollection({
     impact: z.string(),
     thumbnail: z.string(),
     hero: z.string(),
-    hisImage: z.string(),
-    video1: z.string().optional(),
-    video2: z.string().optional(),
+    hisImage: z.string().optional(),
+    videos: z.array(z.string()).optional(),
     media: z.array(z.object({
       src: z.string(),
       alt: z.string()
