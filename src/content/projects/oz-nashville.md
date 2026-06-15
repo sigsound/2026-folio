@@ -1,5 +1,6 @@
 ---
 title: "OZ Arts Nashville"
+order: 9
 role: "Designer & Developer"
 timeline: "2013 - 2015"
 impact: "Site design and development for a nationally recognized performing arts center"

@@ -1,5 +1,6 @@
 ---
 title: "Quickbooks Connect: Emerging Tech"
+order: 3
 role: "Design Strategist"
 timeline: "2018"
 impact: "AR prototype presented at Quickbooks Connect emerging tech showcase"

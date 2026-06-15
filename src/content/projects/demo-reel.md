@@ -1,5 +1,6 @@
 ---
 title: "Motion & 3D Demo Reel"
+order: 6
 role: "Motion Designer / Art Director"
 timeline: "2010 - 2018"
 impact: "Featured work for Adidas, Xbox, Intel, Samsung, Visa, and Skullcandy"

@@ -1,5 +1,6 @@
 ---
 title: "Matterport Unified Experience"
+order: 1
 role: "Director, Product Design"
 timeline: "2016 - 2019"
 impact: "4-year initiative unifying 3 siloed product teams into one platform"

@@ -1,5 +1,6 @@
 ---
 title: "Digital Trends Holiday Guide"
+order: 11
 role: "Art Director & Photographer"
 timeline: "2016"
 impact: "Full creative production of Digital Trends' 2016 holiday gift guide"

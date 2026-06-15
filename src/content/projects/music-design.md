@@ -1,5 +1,6 @@
 ---
-title: "The Prids"
+title: "Music Design"
+order: 5
 role: "Graphic Designer & Photographer"
 timeline: "2016"
 impact: "Album cover, layout, and poster design for a Portland band's comeback record"

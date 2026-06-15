@@ -1,5 +1,6 @@
 ---
 title: "Nike Training Club"
+order: 7
 role: "Product Designer"
 timeline: "2015"
 impact: "First major update to the Nike Training Club iOS app"

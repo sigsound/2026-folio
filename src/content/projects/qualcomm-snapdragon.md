@@ -1,5 +1,6 @@
 ---
 title: "Qualcomm Snapdragon"
+order: 13
 role: "Art Director"
 timeline: "2016 - 2018"
 impact: "Interactive infographic explaining Snapdragon modem technology for consumers"

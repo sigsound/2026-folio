@@ -1,5 +1,6 @@
 ---
 title: "Captured 52"
+order: 8
 role: "Brand Designer & Web Developer"
 timeline: "2016"
 impact: "Minimalist brand and e-commerce site for a curated photography collective"

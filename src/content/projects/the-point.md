@@ -1,5 +1,6 @@
 ---
 title: "The Point Magazine"
+order: 10
 role: "Web Designer"
 timeline: "2016 - 2017"
 impact: "Custom article browsing UI for a philosophical print and digital publication"

@@ -1,5 +1,6 @@
 ---
 title: "Digital Trends"
+order: 12
 role: "Art Director"
 timeline: "2014 - 2018"
 impact: "Redesigned video player UX and gave editorial team a flexible layout system"

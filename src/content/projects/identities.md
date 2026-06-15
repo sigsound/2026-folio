@@ -1,5 +1,6 @@
 ---
 title: "Brand Identities"
+order: 15
 role: "Brand Designer / Art Director"
 timeline: "2010 - 2022"
 impact: "Brand systems across 12+ years and dozens of clients"

@@ -1,5 +1,6 @@
 ---
 title: "Intuit Design Futures"
+order: 4
 role: "Design Strategist"
 timeline: "2017 - 2018"
 impact: "Annual trend methodology program launched across Intuit"

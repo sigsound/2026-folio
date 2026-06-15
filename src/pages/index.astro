@@ -7,7 +7,10 @@ import MinimalistHero from '../components/MinimalistHero.astro';
 // Get projects and sort by order (if available) or by title
 const projects = await getCollection('projects');
 const sortedProjects = projects.sort((a, b) => {
-  // Sort by title since we don't have order field in frontmatter yet
+  // Sort by explicit `order`; projects without one fall to the end (alphabetical)
+  const ao = a.data.order ?? Infinity;
+  const bo = b.data.order ?? Infinity;
+  if (ao !== bo) return ao - bo;
   return (a.data.title || '').localeCompare(b.data.title || '');
 });
 

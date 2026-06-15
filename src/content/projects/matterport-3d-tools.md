@@ -1,5 +1,6 @@
 ---
 title: "Matterport 3D Tools"
+order: 2
 role: "Director, Product Design"
 timeline: "2016 - 2019"
 impact: "10+ tools enabling customers to measure, blur, trim, and collaborate in 3D"
