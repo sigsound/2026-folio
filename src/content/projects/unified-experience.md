@@ -12,18 +12,18 @@ media: [{"src": "/images/projects/unified-experience/media-1.jpg", "alt": "Solut
 
 At Matterport, our products were siloed—capture on mobile native, editing on web, viewing in WebGL. Customers were literally mailing iPads to share files. We had two apps on the iOS app store: 1 for capturing and 1 for viewing. I led a 4-year initiative to unify the experience and the teams, setting a north star vision while shipping pragmatic solutions that closed the workflow gap.
 
-### The Vision
+### Problem
 
-A unified data model for digital twins—layered data, version history, continuous sync. Think GitHub for the built world.
+Matterport's product lived in three silos: capture on mobile native, permissions and sharing on web, editing & viewing 3D in WebGL. Two iOS apps shipped separately, one to capture and one to view. Customers were mailing iPads to hand files between team members, and the org structure mirrored the silos.
 
-### The Reality
+### Constraints
 
-We couldn't rebuild the architecture overnight. So we found pragmatic shortcuts—embedding the WebGL editor in native iOS, enabling source data downloads—that closed the workflow gap while the longer-term work continued.
+No green field. We couldn't rebuild the architecture overnight, the data models across platforms didn't align, and any unification work had to ship alongside the existing product roadmap. The fix had to happen while the plane was flying.
 
-### The Outcome
+### Move
 
-Customers got workflow completeness. The org got a north star. And the product became more unified as the teams did.
+Set a north star, then ship the bridges in parallel. I ran a one-month design sprint that articulated a unified experience concept and sold a major platform investment directly to the CEO. From there we embedded the WebGL editor inside the native iOS app, enabled source data downloads, and collapsed two iOS apps into one, while the long-term target stayed in view: a unified data model for digital twins with layered data, version history, and continuous sync. GitHub for the built world.
 
-### Design Sprint
+### Outcome
 
-One of the first things I did when I moved from design lead to director was kick off a one-month design sprint to articulate this unified experience concept, create designs, and test with Enterprise customers. The designs and research helped sell a major platform investment directly to our CEO. At the time, my "team" was just myself and one other designer. By the time I left, I was managing 5 designers with a more unified product, engineering, and design team.
+Customers got workflow completeness. The org got a north star that outlasted my tenure. I started this work as one of two designers and finished managing five inside a more integrated product, engineering, and design team.

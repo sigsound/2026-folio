@@ -27,9 +27,9 @@ const videoEmbeds = (project.data.videos ?? []).map(getVimeoEmbedUrl).filter(Boo
 
 <Base title={`${project.data.title} - Nick Woods`} description={project.data.impact} heroHeader={true}>
 
-  <!-- Full-bleed header: dark background (hero field kept in CMS but no longer used as bg here) -->
-  <div class="cs-hero-img">
-    <div class="cs-hero-overlay">
+  <!-- Full-bleed header: thumbnail placeholder behind an 80% scrim (swap for a dedicated header image later) -->
+  <div class="cs-hero-img" style={`background-image: url(${project.data.thumbnail})`}>
+    <div class="cs-hero-overlay reveal">
       <h1 class="cs-title">{project.data.title}</h1>
       <div class="cs-metadata">
         <div class="cs-metadata-column">
@@ -52,25 +52,25 @@ const videoEmbeds = (project.data.videos ?? []).map(getVimeoEmbedUrl).filter(Boo
   <div class="cs-single-col">
 
     <!-- Body copy -->
-    <div class="cs-body">
+    <div class="cs-body reveal">
       <Content />
     </div>
 
     <!-- Hero image now shown as first featured image -->
     {project.data.hero && (
-      <img class="cs-featured-img" src={project.data.hero} alt="" />
+      <img class="cs-featured-img img-fade" src={project.data.hero} alt="" loading="lazy" decoding="async" />
     )}
 
     <!-- Secondary featured image (hisImage) -->
     {project.data.hisImage && (
-      <img class="cs-featured-img" src={project.data.hisImage} alt="" />
+      <img class="cs-featured-img img-fade" src={project.data.hisImage} alt="" loading="lazy" decoding="async" />
     )}
 
     <!-- Media grid -->
     {project.data.media && project.data.media.length > 0 && (
       <div class="cs-media-grid">
         {project.data.media.map((item) => (
-          <img src={item.src} alt={item.alt} loading="lazy" />
+          <img class="img-fade" src={item.src} alt={item.alt} loading="lazy" decoding="async" />
         ))}
       </div>
     )}
@@ -79,7 +79,7 @@ const videoEmbeds = (project.data.videos ?? []).map(getVimeoEmbedUrl).filter(Boo
     {videoEmbeds.length > 0 && (
       <div class="cs-videos">
         {videoEmbeds.map((embedUrl) => (
-          <div class="video-wrapper">
+          <div class="video-wrapper reveal">
             <iframe
               src={embedUrl}
               frameborder="0"

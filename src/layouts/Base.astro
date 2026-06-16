@@ -35,6 +35,9 @@ const {
       })();
     </script>
 
+    <!-- Progressive enhancement hook: lets CSS gate JS-only behaviors -->
+    <script is:inline>document.documentElement.classList.add('js');</script>
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,6 +47,69 @@ const {
     <style is:global>
       @import '../styles/global.css';
     </style>
+
+    <!-- Subtle scroll reveal: add hook class before paint so there's no flash; -->
+    <!-- only runs when JS is on AND the user hasn't requested reduced motion.   -->
+    <script is:inline>
+      (function () {
+        try {
+          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+          document.documentElement.classList.add('reveal-enabled');
+
+          var setup = function () {
+            // Fade real images in as they decode/load (lazy images fade in as you approach)
+            Array.prototype.slice.call(document.querySelectorAll('img.img-fade')).forEach(function (img) {
+              if (img.complete && img.naturalWidth > 0) {
+                img.classList.add('is-loaded');
+              } else {
+                var done = function () { img.classList.add('is-loaded'); };
+                img.addEventListener('load', done, { once: true });
+                img.addEventListener('error', done, { once: true });
+              }
+            });
+
+            var els = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+            if (els.length) {
+              // Stagger siblings within grids/rows for a gentle cascade
+              ['.Cards', '.cs-media-grid', '.skills-footer'].forEach(function (groupSel) {
+                document.querySelectorAll(groupSel).forEach(function (group) {
+                  var i = 0;
+                  Array.prototype.slice.call(group.children).forEach(function (child) {
+                    if (child.classList.contains('reveal')) {
+                      child.style.transitionDelay = Math.min(i * 80, 480) + 'ms';
+                      i++;
+                    }
+                  });
+                });
+              });
+
+              if (!('IntersectionObserver' in window)) {
+                els.forEach(function (el) { el.classList.add('is-visible'); });
+              } else {
+                var observer = new IntersectionObserver(function (entries, obs) {
+                  entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                      entry.target.classList.add('is-visible');
+                      obs.unobserve(entry.target);
+                    }
+                  });
+                }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+                els.forEach(function (el) { observer.observe(el); });
+              }
+            }
+          };
+
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', setup);
+          } else {
+            setup();
+          }
+        } catch (e) {
+          // Never leave content hidden if something goes wrong
+          document.documentElement.classList.remove('reveal-enabled');
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="theme-provider">
@@ -63,24 +129,33 @@ const {
     </div>
 
     <script define:vars={{ heroHeader }}>
-      // Set correct initial logo on non-hero pages (hero pages always use white logo, set server-side)
-      if (!heroHeader) {
+      const header = document.querySelector('.Header');
+      const logoImg = document.getElementById('logo-img');
+
+      // Toggle the scrolled header treatment and keep the logo legible against it.
+      function applyHeaderState() {
+        const scrolled = window.scrollY > 80;
+        if (header) header.classList.toggle('is-scrolled', scrolled);
+
+        if (!logoImg) return;
         const theme = document.documentElement.getAttribute('data-theme');
-        const logoImg = document.getElementById('logo-img');
-        if (logoImg) {
-          logoImg.src = theme === 'dark' ? '/images/Logo-on-Dark.svg' : '/images/Logo-on-Light.svg';
+        const themeLogo = theme === 'dark' ? '/images/Logo-on-Dark.svg' : '/images/Logo-on-Light.svg';
+
+        if (heroHeader) {
+          // White logo over the dark hero at the top; theme logo once the light backdrop appears
+          logoImg.src = scrolled ? themeLogo : '/images/Logo-on-Dark.svg';
+        } else {
+          logoImg.src = themeLogo;
         }
       }
 
-      // Always listen for OS theme changes so the page theme stays in sync on ALL pages
+      applyHeaderState();
+      window.addEventListener('scroll', applyHeaderState, { passive: true });
+
+      // Keep theme + header/logo in sync with OS theme changes on all pages
       window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-        const newTheme = e.matches ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', newTheme);
-        // Only swap the logo on non-hero pages (hero pages always keep white logo)
-        if (!heroHeader) {
-          const logo = document.getElementById('logo-img');
-          if (logo) logo.src = newTheme === 'dark' ? '/images/Logo-on-Dark.svg' : '/images/Logo-on-Light.svg';
-        }
+        document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+        applyHeaderState();
       });
     </script>
   </body>

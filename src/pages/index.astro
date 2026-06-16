@@ -24,25 +24,38 @@ const { Content: AboutContent } = about ? await render(about) : { Content: null 
   <MinimalistHero />
 
   <div class="Hero">
-    <div class="HeroGroup">
+    <div class="HeroGroup reveal">
       <h1>Designing the forest
         <br>and the trees</h1>
     </div>
   </div>
 
-  <div class="Cards col">
-    {sortedProjects.map((project) => (
+  <div class="Cards col" id="project-grid">
+    {sortedProjects.map((project, index) => (
       <ProjectCard
         title={project.data.title}
+        role={project.data.role}
         image={project.data.thumbnail}
         contentfulId={project.slug}
+        extra={index >= 4}
       />
     ))}
+
+    {sortedProjects.length > 4 && (
+      <div class="more-row">
+        <button id="more-btn" class="more-btn" type="button" aria-controls="project-grid" aria-expanded="false">
+          View all work
+          <svg class="more-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+    )}
   </div>
 
   {about && (
     <div class="cs-content">
-      <div class="about">
+      <div class="about reveal">
         <div class="about-img" style={`background-image: url(${about.data.profileImage})`}></div>
         <div class="about-text">
           {AboutContent && <AboutContent />}
@@ -52,7 +65,7 @@ const { Content: AboutContent } = about ? await render(about) : { Content: null 
   )}
 
   <div class="skills-footer">
-    <div>
+    <div class="reveal">
       <h3>Core Skills</h3>
       <div class="thin-line"></div>
       <h5>AI Prototyping</h5>
@@ -72,7 +85,7 @@ const { Content: AboutContent } = about ? await render(about) : { Content: null 
       <h5>Photography</h5>
       <h5>Front-End Development</h5>
     </div>
-    <div>
+    <div class="reveal">
       <h3>Brands I've Worked On</h3>
       <div class="thin-line"></div>
       <div class="brands-grid">
@@ -105,7 +118,7 @@ const { Content: AboutContent } = about ? await render(about) : { Content: null 
         </div>
       </div>
     </div>
-    <div>
+    <div class="reveal">
       <h3>Agencies I've Worked With</h3>
       <div class="thin-line"></div>
       <h5><a href="http://roundhouseagency.com">Roundhouse</a></h5>
@@ -121,7 +134,7 @@ const { Content: AboutContent } = about ? await render(about) : { Content: null 
       <h5><a href="http://liquidagency.com">Liquid</a></h5>
       <h5><a href="http://agentthinking.com">Agent</a></h5>
     </div>
-    <div>
+    <div class="reveal">
       <h3>Products I've Worked On</h3>
       <div class="thin-line"></div>
       <h5><a href="https://en.wikipedia.org/wiki/InstantAction">Instant Action</a> — First embeddable 3D game</h5>
@@ -134,4 +147,15 @@ const { Content: AboutContent } = about ? await render(about) : { Content: null 
       <h5><a href="https://poly.cam">Polycam</a> (iOS / Android / Web)</h5>
     </div>
   </div>
+
+  <script>
+    const grid = document.getElementById('project-grid');
+    const moreBtn = document.getElementById('more-btn');
+    if (grid && moreBtn) {
+      moreBtn.addEventListener('click', () => {
+        grid.classList.add('is-expanded');
+        moreBtn.setAttribute('aria-expanded', 'true');
+      });
+    }
+  </script>
 </Base>
