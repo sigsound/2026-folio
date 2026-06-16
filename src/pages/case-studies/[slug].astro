@@ -58,19 +58,19 @@ const videoEmbeds = (project.data.videos ?? []).map(getVimeoEmbedUrl).filter(Boo
 
     <!-- Hero image now shown as first featured image -->
     {project.data.hero && (
-      <img class="cs-featured-img img-fade" src={project.data.hero} alt="" loading="lazy" decoding="async" />
+      <img class="cs-featured-img reveal" src={project.data.hero} alt="" decoding="async" />
     )}
 
     <!-- Secondary featured image (hisImage) -->
     {project.data.hisImage && (
-      <img class="cs-featured-img img-fade" src={project.data.hisImage} alt="" loading="lazy" decoding="async" />
+      <img class="cs-featured-img reveal" src={project.data.hisImage} alt="" decoding="async" />
     )}
 
     <!-- Media grid -->
     {project.data.media && project.data.media.length > 0 && (
       <div class="cs-media-grid">
         {project.data.media.map((item) => (
-          <img class="img-fade" src={item.src} alt={item.alt} loading="lazy" decoding="async" />
+          <img class="reveal" src={item.src} alt={item.alt} decoding="async" />
         ))}
       </div>
     )}

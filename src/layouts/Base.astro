@@ -60,21 +60,10 @@ const {
           document.documentElement.classList.add('reveal-enabled');
 
           var setup = function () {
-            // Fade real images in as they decode/load (lazy images fade in as you approach)
-            Array.prototype.slice.call(document.querySelectorAll('img.img-fade')).forEach(function (img) {
-              if (img.complete && img.naturalWidth > 0) {
-                img.classList.add('is-loaded');
-              } else {
-                var done = function () { img.classList.add('is-loaded'); };
-                img.addEventListener('load', done, { once: true });
-                img.addEventListener('error', done, { once: true });
-              }
-            });
-
             var els = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
             if (els.length) {
               // Stagger siblings within grids/rows for a gentle cascade
-              ['.Cards', '.cs-media-grid', '.skills-footer'].forEach(function (groupSel) {
+              ['.Cards', '.skills-footer'].forEach(function (groupSel) {
                 document.querySelectorAll(groupSel).forEach(function (group) {
                   var i = 0;
                   Array.prototype.slice.call(group.children).forEach(function (child) {
@@ -96,7 +85,7 @@ const {
                       obs.unobserve(entry.target);
                     }
                   });
-                }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+                }, { rootMargin: '0px 0px 8% 0px', threshold: 0 });
                 els.forEach(function (el) { observer.observe(el); });
               }
             }
