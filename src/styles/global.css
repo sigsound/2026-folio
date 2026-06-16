@@ -621,7 +621,7 @@ h5 {
   /* Let the hero grow with its content instead of clipping it */
   .cs-hero-img {
     height: auto;
-    min-height: 420px;
+    min-height: 500px;
     padding: 80px 0;
   }
 
@@ -653,7 +653,7 @@ h5 {
 
   .cs-hero-img {
     height: auto;
-    min-height: 300px;
+    min-height: 450px;
     padding: 56px 0;
   }
 
