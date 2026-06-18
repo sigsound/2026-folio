@@ -7,6 +7,7 @@ impact: "4-year initiative unifying 3 siloed product teams into one platform"
 thumbnail: "/images/projects/unified-experience/thumb.jpg"
 hero: "/images/projects/unified-experience/hero.jpg"
 hisImage: "/images/projects/unified-experience/his-image.jpg"
+videos: ["https://vimeo.com/1150227991"]
 media: [{"src": "/images/projects/unified-experience/media-1.jpg", "alt": "Solution concepts"}, {"src": "/images/projects/unified-experience/media-2.jpg", "alt": "Two apps to one"}, {"src": "/images/projects/unified-experience/media-3.jpg", "alt": "Customer reactions"}, {"src": "/images/projects/unified-experience/media-4.jpg", "alt": "Customer pain point 2"}, {"src": "/images/projects/unified-experience/media-5.jpg", "alt": "Customer pain point 3"}, {"src": "/images/projects/unified-experience/media-6.jpg", "alt": "Solution 2"}, {"src": "/images/projects/unified-experience/media-7.jpg", "alt": "Solution 3"}, {"src": "/images/projects/unified-experience/media-8.jpg", "alt": "Unified team"}]
 ---
 

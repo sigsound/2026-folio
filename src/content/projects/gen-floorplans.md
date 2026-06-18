@@ -7,7 +7,7 @@ impact: "Almost 4-year evolution of computer vision technology to deliver editab
 thumbnail: "/images/projects/gen-floorplans/cover.jpg"
 hero: ""
 hisImage: ""
-videos: ["https://vimeo.com/1202298677", "https://vimeo.com/1202229297"]
+videos: ["https://vimeo.com/1202601900", "https://vimeo.com/1202298677", "https://vimeo.com/1202229297"]
 media: [{"src": "/images/projects/gen-floorplans/Floorplan 1.jpg", "alt": "Before I started"}, {"src": "/images/projects/gen-floorplans/Floorplan 2.jpg", "alt": "RoomPlan API Launch"}, {"src": "/images/projects/gen-floorplans/Floorplan 3.jpg", "alt": "Early floor plan designs"}, {"src": "/images/projects/gen-floorplans/Floorplan 4.jpg", "alt": "Computer Vision Explorations"}, {"src": "/images/projects/gen-floorplans/Floorplan 5.jpg", "alt": "Advanced Floor Plans"}, {"src": "/images/projects/gen-floorplans/Floorplan 6.jpg", "alt": "SaaS cross platform approach"}, {"src": "/images/projects/gen-floorplans/Floorplan 7.jpg", "alt": "Customizable color themes"}, {"src": "/images/projects/gen-floorplans/Floorplan 8.jpg", "alt": "Feature tracker"}, {"src": "/images/projects/gen-floorplans/Floorplan 9.jpg", "alt": "Capture Quality Improvements"}]
 ---
 
