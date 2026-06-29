@@ -1,6 +1,6 @@
 ---
 title: "Generative Floor Plans"
-order: 1
+order: 2
 role: "Product Management, Design & Leadership"
 timeline: "2022 - 2026"
 impact: "Almost 4-year evolution of computer vision technology to deliver editable, generative floor plans instantly with every 3D spatial capture"
